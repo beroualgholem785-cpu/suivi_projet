@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <!-- 🔴 IMPORTANT POUR MOBILE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            margin: 10px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        select, button {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        /* 🔥 TABLE RESPONSIVE */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        /* 🔥 BOUTONS */
+        .actions {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .actions button {
+            padding: 12px 20px;
+            margin: 5px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .import { background: green; }
+        .pdf { background: red; }
+
+        /* 🔥 MOBILE STYLE */
+        @media (max-width: 600px) {
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>📊 Suivi des Projets</h2>
+
+<!-- 🔍 FILTRE -->
+<form method="get">
+    <select name="projet">
+        <option value="">-- Tous les projets --</option>
+        {% for p in all_projets %}
+            <option value="{{ p.id }}">{{ p.nom }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filtrer</button>
+</form>
+
+<!-- 🔥 TABLE -->
+<div class="table-container">
+<table>
+    <tr>
+        <th>Projet</th>
+        <th>Budget</th>
+        <th>Cumul</th>
+        <th>%</th>
+    </tr>
+
+    {% for p in projets %}
+    <tr>
+        <td>{{ p.nom }}</td>
+        <td>{{ p.budget }}</td>
+        <td>{{ p.cumul }}</td>
+        <td>{{ p.pourcentage }}%</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<!-- 🔥 ACTIONS -->
+<div class="actions">
+    <a href="/import/">
+        <button class="import">📥 Import Excel</button>
+    </a>
+
+    <a href="/pdf/">
+        <button class="pdf">📄 Export PDF</button>
+    </a>
+</div>
+
+</body>
+</html>
